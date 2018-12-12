@@ -1,0 +1,14 @@
+en:
+  title: 'To do test for ZonaWiki'
+  user_tag:
+    change_button: "Change"
+    success_msg: ':D User change'
+    error_msg:  ':C Something happen'
+  todo:
+    loading: 'loading list'
+    no_items: 'You have no task'
+    create_button: 'Save as new'
+    update_button: 'Save'
+    delete_button: 'Remove'
+    success_msg: ':D Done!'
+    error_msg:  ':C Something happen'

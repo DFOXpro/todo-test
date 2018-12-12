@@ -1,0 +1,35 @@
+default: &default
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  host: localhost
+
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= ENV["POSTGRES_DB"] %>
+  pool: 5
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: 'db'
+  port: '5432'
+
+test: &TEST
+  adapter: postgresql
+  encoding: utf8
+  database: <%= ENV["POSTGRES_DB"] %>
+  pool: 5
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: 'db'
+  port: '5432'
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: <%= ENV["POSTGRES_DB"] %>
+  pool: 5
+  username: <%= ENV["POSTGRES_USER"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: 'db'
+  port: '5432'

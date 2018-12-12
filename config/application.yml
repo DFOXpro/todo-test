@@ -1,0 +1,14 @@
+development:
+  # Database settings
+  # POSTGRES_DB: '' # In variables.env
+  # POSTGRES_USER: '' # In variables.env
+  # POSTGRES_PASSWORD: '' # In variables.env
+  DB_PORT: '5432'
+  DB_HOST: 'db' # 'db' for Docker, 'localhost' for Postgres local
+
+test:
+  #POSTGRES_DB: ''
+  #POSTGRES_USER: ''
+  #POSTGRES_PASSWORD: ''
+  DB_PORT: '5432'
+  DB_HOST: 'db' # 'db' for Docker, 'localhost' for Postgres local

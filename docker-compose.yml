@@ -1,0 +1,26 @@
+version: '2' # Version of docker-compose
+services: # A service is a container
+  api:
+    env_file:
+      - variables.env # Looks for an environment file
+    build: . # Look in that directory a 'Dockerfile'
+    ports:
+      - 3000:3000 # external:internal to expose to outter world (my machine)
+    links:
+      - db:db # makes the link from the service 'db' to IP in /hosts
+    volumes:
+      - .:/usr/src/app # Creates the directory and mounts as external:internal
+    working_dir: /usr/src/app # inits here
+    # To be able to use byebug http://stackoverflow.com/a/32690885/1755300
+    stdin_open: true
+    tty: true
+  db:
+    image: postgres # Name of the image form the docker repo
+    env_file:
+      - variables.env # Looks for an environment file
+    volumes:
+      - pg_data_zona_wiki:/var/lib/postgresql/data # # Creates the directory and mounts as external:internal
+    ports:
+      - 2345:5432
+volumes:
+  pg_data_zona_wiki:
