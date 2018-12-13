@@ -45,6 +45,8 @@ class Owner
 # models/todo.coffee
 class Todo
 	constructor: (@data, @status, @status_percentage)->
+	@getTodoList: ->
+		
 
 # controllers/owners.coffee
 class OwnersController
@@ -83,9 +85,9 @@ class TodosController
 
 	getTodoListAndUpdate = ->
 		console.log 'TodosController.getTodoListAndUpdate'
-		_this.loadingEL.classList.add 'display'
 		_todosList = []
 		_this.tv.cleanTodoList()
+		_this.loadingEL.classList.add 'display'
 		Todo.getTodoList
 		.then (r) ->
 			_this.tv.fillTodoList _todosList = r.data.todos_list
