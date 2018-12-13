@@ -52,7 +52,6 @@ class OwnersController
 	constructor: (@submitEL, @textEL)->
 		_this = this
 		Owner.getOrRequestUserTag().then (r) ->
-			console.log 'asd', r
 			_this.textEL.value = r
 		, (r) ->
 			console.log 'poi', r
@@ -80,13 +79,10 @@ class TodosController
 	_todosList = null
 	constructor: (@tv)-> # tv = TodosView
 		_this = this
-		Owner.getOrRequestUserTag().then (r) ->
-			console.log 'asd', r
-			_this.textEL.value = r
-		, (r) ->
-			console.log 'poi', r
-			View.popMessage '#user_tag_error_msg', r.errors
+		addEventListener 'user_tag_update', getTodoListAndUpdate
+
 	getTodoListAndUpdate = ->
+		console.log 'TodosController.getTodoListAndUpdate'
 		_this.loadingEL.classList.add 'display'
 		_todosList = []
 		_this.tv.cleanTodoList()
@@ -136,7 +132,6 @@ class TodosView
 		@newTextEL = document.querySelector '#todo_new_text'
 		_this = this
 		tc = new TodosController _this
-		addEventListener 'user_tag_update', tc.getTodoListAndUpdate
 		# user_tag actions events
 		# @newtextEL.onchange = tc.validateTodo # always true?...
 		@newSubmitEL.addEventListener 'click', tc.createTodo, false
@@ -157,6 +152,7 @@ class TodosView
 			innerHTML = ''
 			todosList.forEach (todo) ->
 				innerHTML += _todoItemEL todo
+
 # views/owners.coffee
 class OwnersView
 	constructor: ->
