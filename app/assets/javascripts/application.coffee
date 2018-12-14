@@ -6,7 +6,10 @@ class Owner
 	user_tag = ''
 
 	_anounce_user_tag = ->
-		new CustomEvent('user_tag_update', { user_tag: user_tag });
+		console.log '_anounce_user_tag'
+		window.user_tag_ready = true
+		new CustomEvent 'user_tag_update', user_tag
+		false
 
 	# It's a singleton like class
 	# constructor: ()->
@@ -14,9 +17,10 @@ class Owner
 	@getOrRequestUserTag: ->
 		# we can salt the user tag but not now
 		user_tag = user_tag || localStorage.getItem 'user_tag'
-		console.log 'Owner@getOrRequestUserTag', !!user_tag
+		console.log 'Owner@getOrRequestUserTag', user_tag
 		new Promise (resolve, reject)->
 			if user_tag
+				console.log 'localStorage', user_tag
 				_anounce_user_tag()
 				resolve user_tag
 			else
@@ -45,19 +49,30 @@ class Owner
 # models/todo.coffee
 class Todo
 	constructor: (@data, @status, @status_percentage)->
-	@getTodoList: ->
-		
+	@getTodoList: (user_tag)->
+		user_tag = user_tag || Owner.getOrRequestUserTag()
+		console.log 'Todo@getTodoList', user_tag
+		xhr ROUTES.API.api.v1.todos.list, user_tag: user_tag
+		.then (r)->
+			console.log 'XHR success', r, ROUTES.API.api.v1.todos.list
+			user_tag = r.data.user_tag
+			_anounce_user_tag()
+			localStorage.setItem 'user_tag', user_tag
+			resolve user_tag
+			false
+		# .then reject
 
 # controllers/owners.coffee
 class OwnersController
 	_this = null
 	constructor: (@submitEL, @textEL)->
+		console.log 'OwnersController.constructor'
 		_this = this
 		Owner.getOrRequestUserTag().then (r) ->
 			_this.textEL.value = r
-		, (r) ->
-			console.log 'poi', r
-			View.popMessage '#user_tag_error_msg', r.errors
+		# , (r) ->
+		# 	console.log 'getOwnerError', r
+		# 	View.popMessage '#user_tag_error_msg', r.errors
 	validateOwner: ->
 		console.log 'OwnersController.validateOwner', _this
 		View.inputStatus(
@@ -80,15 +95,21 @@ class TodosController
 	_this = null
 	_todosList = null
 	constructor: (@tv)-> # tv = TodosView
+		console.log 'TodosController.constructor'
 		_this = this
-		addEventListener 'user_tag_update', getTodoListAndUpdate
+		if window.user_tag_ready
+			console.log 'utr'
+			_this.getTodoListAndUpdate()
+		else
+			console.log 'utw'
+			addEventListener 'user_tag_update', _this.getTodoListAndUpdate
 
-	getTodoListAndUpdate = ->
-		console.log 'TodosController.getTodoListAndUpdate'
+	getTodoListAndUpdate: (user_tag)->
+		console.log 'TodosController.getTodoListAndUpdate', user_tag
 		_todosList = []
 		_this.tv.cleanTodoList()
-		_this.loadingEL.classList.add 'display'
-		Todo.getTodoList
+		_this.tv.loadingEL.classList.add 'display'
+		Todo.getTodoList(user_tag)
 		.then (r) ->
 			_this.tv.fillTodoList _todosList = r.data.todos_list
 			View.popMessage '#new_todo_error_msg', r.data.errors if r.data.errors
@@ -143,7 +164,7 @@ class TodosView
 		document.querySelectorAll '#todo_list li'
 
 	cleanTodoList: ->
-		_listItemsEL.forEach (el) ->
+		_listItemsEL().forEach (el) ->
 			el.remove()
 	fillTodoList: (todosList)->
 		cleanTodoList()
