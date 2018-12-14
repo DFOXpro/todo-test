@@ -1,0 +1,26 @@
+en:
+  title: 'To do test for ZonaWiki'
+  user_tag:
+    summary: 'Details of this session'
+    label: 'user tag'
+    change_button: "Change"
+    success_msg: ':D User change'
+    error_msg: ':C Something happen'
+  alerts:
+    create_error: 'Entity not created'
+    not_found: 'Entity not found' # read_error
+    update_error: 'Entity not updated'
+    delete_error: 'Entity not deleted'
+  todo:
+    attributes:
+      data: 'task'
+      status_percentage: 'percentage'
+      status: 'status'
+    list: 'Todo list'
+    loading: 'loading list'
+    no_items: 'You have no task'
+    create_button: 'Save as new'
+    update_button: 'Save'
+    delete_button: 'Remove'
+    success_msg: ':D Done!'
+    error_msg: ':C Something happen'

@@ -1,0 +1,26 @@
+es:
+  title: 'Prueba tecnica TODO para ZonaWiki'
+  user_tag:
+    summary: 'Detalles de esta sesión'
+    label: 'etiqueta de usuario'
+    change_button: "Cambiar"
+    success_msg: ':D usuario cambiado'
+    error_msg: ':C Algo pasó'
+  alerts:
+    create_error: 'Entitidad no creada'
+    not_found: 'Entitidad no encontrada' # read_error
+    update_error: 'Entitidad no actualizada'
+    delete_error: 'Entitidad no borradada'
+  todo:
+    attributes:
+      data: 'tarea'
+      status_percentage: 'porcentaje'
+      status: 'stado'
+    list: 'Lista de tareas'
+    loading: 'Cargando lista'
+    no_items: 'No tiene tareas'
+    create_button: 'Guardar como nueva'
+    update_button: 'Guardar'
+    delete_button: 'Borrar'
+    success_msg: ':D Listo!'
+    error_msg: ':C Algo pasó'
