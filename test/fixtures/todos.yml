@@ -1,11 +1,20 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one:
+  id: 1
+  owner_id: 1
+  "Qzk5UEg0SzA3VUZZQ1hNV0hvbGEgbXVuZG8=
+"
 
-# This model initially had no columns defined. If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-# column: value
+two:
+  id: 2
+  owner_id: 1
+  "RjJKUVRWSFNSWU1LSUFTMmFzZA==
+  "
+  status: true
+
+three:
+  id: 3
+  owner_id: 1
+  "RjJKUVRWSFNSWU1LSUFTMnF3ZVFXRQ==
+  "
+  status_percentage: 45
+  status: false

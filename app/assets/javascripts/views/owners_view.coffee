@@ -1,6 +1,7 @@
 window.OwnersView = class
 	_this = null
 	_oc = null
+
 	constructor: ->
 		console.log 'OwnersView.constructor'
 		@submitEL = document.querySelector '#user_tag_button'

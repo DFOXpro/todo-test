@@ -1,5 +1,6 @@
 window.View = class
 	_timeOutQueue = {}
+
 	@popMessage: (msgELID, extraCustomText)->
 		console.log 'View@popMessage'
 		hideMsg = ->

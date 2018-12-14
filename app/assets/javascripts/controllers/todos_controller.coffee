@@ -28,8 +28,9 @@ window.TodosController = class
 		# 	View.popMessage '#new_todo_error_msg'#, r.data.errors
 
 	createTodo: ->
-		_this.tv.toggleTodoInputDisable true
 		todoText = _this.tv.newTextEL.value + ''
+		return false if !todoText
+		_this.tv.toggleTodoInputDisable true
 		Todo.createTodo data: todoText
 		.then (todo) ->
 			_todosList.push todo

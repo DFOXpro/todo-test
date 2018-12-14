@@ -35,9 +35,11 @@ window.TodosView = class
 	toggleTodoInputDisable: (isDisabled) ->
 		_this.newSubmitEL.disabled = isDisabled
 		_this.newTextEL.disabled = isDisabled
+
 	cleanTodoList: ->
 		_listItemsEL().forEach (el) ->
 			el.remove()
+
 	fillTodoList: (todosList)->
 		console.log 'TodosView.fillTodoList', todosList
 		_this.cleanTodoList()
