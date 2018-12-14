@@ -7,6 +7,7 @@ class Owner < ApplicationRecord
 
 	private
 	def generate_onwer_keys
+		return true if seed.present? && user_tag.present?
 		puts 'generating keys for owner'
 		self.user_tag = generate_user_tag
 		self.seed = generate_seed

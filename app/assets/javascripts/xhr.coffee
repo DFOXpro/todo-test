@@ -1,24 +1,31 @@
 # xhr.coffee
-window.xhr = (trochaRoute, pathArgs)->
+# this is just a wannabe of ajax or angular's $http
+window.xhr = (trochaRoute, pathArgs, data)->
 	pathArgs = pathArgs || {}
 	pathArgs.post = true
-	console.log 'xhr', trochaRoute, pathArgs
+	# console.log 'xhr', trochaRoute, pathArgs, data
 	oReq = new XMLHttpRequest()
 	xhrHandler = (handler)->
 		(e)->
-			handler
+			r =
 				data: JSON.parse(oReq.response)
 				event: e
+			console.log 'XHR load', r, trochaRoute, pathArgs, data
+			handler r
 	new Promise (resolve, reject)->
 		# oReq.addEventListener("progress", updateProgress);
 		oReq.addEventListener 'load', xhrHandler resolve
 		oReq.addEventListener 'error', xhrHandler reject
 		# oReq.addEventListener("abort", transferCanceled);
+
 		oReq.open(
 			trochaRoute.$method,
 			trochaRoute.path pathArgs
 		)
-		oReq.send()
+		if data
+			oReq.setRequestHeader "Content-Type", "application/json"
+			oReq.send JSON.stringify data
+		else oReq.send()
 
 # Trocha Routes
 APIResource =

@@ -2,30 +2,43 @@
 %h1= t 'title'
 
 %details#user_tag_info
-	%summary Details of this session
+	%summary= t 'user_tag.summary'
 	#user_tag_form
-		%label user tag:
+		%label= t 'user_tag.label'
 		%input#user_tag_text{type: "text", autocomplete: "off"}
 		%input#user_tag_button{type: "submit", value: "#{t('user_tag.change_button')}"}
 		= ZWTDT_server_feedback 'user_tag_success_msg', 'user_tag.success_msg', '.success'
 		= ZWTDT_server_feedback 'user_tag_error_msg', 'user_tag.error_msg', '.error'
-
+%h2= t 'todo.list'
 %ul#todo_list
-	-#autofilled in client
+	-# autofilled in client
 %b#todo_loading.hide.display= t 'todo.loading'
 %b#todo_no_items.hide= t 'todo.no_items'
 #todo_new
 	-# I miss pug here
 	%input#todo_new_text.todo_text{type: "text", autocomplete: "off", disabled: true}
-	%input#todo_new_button.todo_button{type: "submit", value: "#{t('todo.create_button')}", disabled: true}
+	%input#todo_new_button.todo_button.valid{type: "submit", value: "#{t('todo.create_button')}", disabled: true}
 = ZWTDT_server_feedback 'new_todo_success_msg', 'todo.success_msg', '.success'
 = ZWTDT_server_feedback 'new_todo_error_msg', 'todo.error_msg', '.error'
 
+-# the js templates literals still miss potential
+-# next comments fixes a missing feature
 %template#_todo_item
-	%li{id: 'todo_${todo.id}'}
-		%input.todo_text{type: "text", autocomplete: "off", value: '${todo.data}'}
-
-		%input.todo_percentage_status{type: "number", autocomplete: "off", min: 0, max: 100, step: 5, value: '${todo.percentage_status}'}
-		%input.todo_status{type: "checkbox", autocomplete: "off", value: '${todo.status}'}
-		%input.todo_button{type: "submit", value: "#{t('todo.update_button')}"}
-		%input.todo_button{type: "submit", value: "#{t('todo.delete_button')}"}
+	-# {todo.id}
+	%li{id: 'todo_$', title: ''}
+		%span
+			%label= t 'todo.attributes.data'
+			-# {todo.data}
+			%input.todo_text{type: "text", autocomplete: "off", value: '$'}
+		%span
+			%label= t 'todo.attributes.status_percentage'
+			-# {todo.status_percentage}
+			%input.todo_status_percentage{type: "number", autocomplete: "off", min: 0, max: 100, step: 5, value: '$'}
+		%span
+			%label= t 'todo.attributes.status'
+			-# {todo.status}
+			!='<input autocomplete="off" class="todo_status" type="checkbox" $>'
+			-# The checked non valued attribute is also a problem in Haml
+			-# %input.todo_status{type: "checkbox", autocomplete: "off", value: '$'}
+		%input.todo_button.todo_update.valid{type: "submit", value: "#{t 'todo.update_button'}"}
+		%input.todo_button.todo_delete.invalid{type: "submit", value: "#{t 'todo.delete_button'}"}
