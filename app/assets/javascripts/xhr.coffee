@@ -10,7 +10,7 @@ window.xhr = (trochaRoute, pathArgs, data)->
 			r =
 				data: JSON.parse(oReq.response)
 				event: e
-			console.log 'XHR load', r, trochaRoute, pathArgs, data
+			# console.log 'XHR load', r, trochaRoute, pathArgs, data
 			handler r
 	new Promise (resolve, reject)->
 		# oReq.addEventListener("progress", updateProgress);

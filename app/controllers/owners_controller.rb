@@ -1,7 +1,10 @@
 class OwnersController < ApplicationController
 	def create_owner
-		@owner = Owner.new
-		if @owner.save
+		@owner = Owner.new user_tag: params[:user_tag]
+		if(
+			@owner.save() ||
+			@owner.errors.as_json[:user_tag] == ["has already been taken"]
+		)
 			render(
 				status: 200,
 				json: {
@@ -9,6 +12,7 @@ class OwnersController < ApplicationController
 				}
 			) && return
 		else
+			puts @owner.errors.as_json
 			render(
 				status: 400,
 				json: {

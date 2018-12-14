@@ -6,7 +6,6 @@ window.OwnersController = class
 		_this = this
 		Owner.getOrRequestUserTag()
 		.then (user_tag) ->
-			console.log 'asd', _this.ov.textEL, user_tag
 			_this.ov.textEL.value = user_tag
 		# , (r) ->
 		# 	console.log 'getOwnerError', r
@@ -21,11 +20,10 @@ window.OwnersController = class
 
 	changeOwner: ->
 		console.log 'OwnersController.changeOwner', _this
-		_this.ov.submitEL.disabled = true
 		Owner.changeUserTag _this.ov.textEL.value
 		.then (r) ->
-			_this.ov.submitEL.disabled = false
-			if r.status
+			if r.data.user_tag
+				_this.ov.textEL.value = r.data.user_tag
 				View.popMessage '#user_tag_success_msg'
 			else
 				View.popMessage '#user_tag_error_msg', r.data.errors

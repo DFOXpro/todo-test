@@ -10,7 +10,8 @@ window.TodosController = class
 			_this.getTodoListAndUpdate()
 		else
 			console.log 'utw'
-			addEventListener 'user_tag_update', _this.getTodoListAndUpdate
+			# window.addEventListener 'user_tag_update', _this.getTodoListAndUpdate
+		window.tc = _this
 
 	getTodoListAndUpdate: (user_tag)->
 		console.log 'TodosController.getTodoListAndUpdate', user_tag

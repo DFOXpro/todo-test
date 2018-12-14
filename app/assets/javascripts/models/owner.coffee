@@ -2,10 +2,15 @@ window.Owner = class
 	_userTagValidatorRexp = /^[A-Z0-9]{3,8}$/
 	user_tag = ''
 
+	_write_user_tag = (r) ->
+		user_tag = r.data.user_tag
+		localStorage.setItem 'user_tag', user_tag
+
 	_anounce_user_tag = ->
 		console.log '_anounce_user_tag'
 		window.user_tag_ready = true
-		new CustomEvent 'user_tag_update', user_tag
+		# window.dispatchEvent new CustomEvent 'user_tag_update', user_tag
+		window.tc.getTodoListAndUpdate user_tag
 		false
 
 	# It's a singleton like class
@@ -28,10 +33,9 @@ window.Owner = class
 			else
 				xhr ROUTES.API.api.v1.owners.create
 				.then (r)->
-					user_tag = r.data.user_tag
-					_anounce_user_tag()
-					localStorage.setItem 'user_tag', user_tag
+					_write_user_tag r
 					resolve user_tag
+					_anounce_user_tag()
 					false
 				# .then reject
 			false
@@ -39,10 +43,17 @@ window.Owner = class
 	@validateUserTag: (user_tag)->
 		console.log 'Owner@validateUserTag', user_tag.toUpperCase()
 		return false unless user_tag
-		_userTagValidatorRexp.test userTag.toUpperCase()
+		_userTagValidatorRexp.test user_tag.toUpperCase()
 
 	@changeUserTag: (newUserTag)->
 		# newUserTag = $('#user_tag_text').value()
-		newUserTag.toUpperCase()
-		return false if newUserTag == @getUserTag
-		return false unless @validateUserTag newUserTag
+		newUserTag = newUserTag.toUpperCase()
+		return false if newUserTag == Owner.getUserTag
+		return false unless Owner.validateUserTag newUserTag
+		new Promise (resolve, reject)->
+			xhr ROUTES.API.api.v1.owners.create, null, user_tag: newUserTag
+			.then (r)->
+				_write_user_tag r
+				resolve r
+				_anounce_user_tag()
+				false
