@@ -1,0 +1,20 @@
+one:
+  id: 1
+  owner_id: 1
+  "Qzk5UEg0SzA3VUZZQ1hNV0hvbGEgbXVuZG8=
+"
+
+two:
+  id: 2
+  owner_id: 1
+  "RjJKUVRWSFNSWU1LSUFTMmFzZA==
+  "
+  status: true
+
+three:
+  id: 3
+  owner_id: 1
+  "RjJKUVRWSFNSWU1LSUFTMnF3ZVFXRQ==
+  "
+  status_percentage: 45
+  status: false
